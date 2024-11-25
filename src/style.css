@@ -1,0 +1,105 @@
+:root {
+  --sidebar-width: 280px;
+  --header-height: 120px;
+  --header-collapsed-height: 60px;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.top-banner {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1900;
+  transition: transform 0.3s ease-in-out;
+}
+
+.top-banner.collapsed {
+  transform: translateY(-60px);
+}
+
+.restore-banner {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1901;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s;
+}
+
+.restore-banner.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  position: fixed;
+  left: 0;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  transition: top 0.3s ease-in-out;
+  z-index: 1800;
+}
+
+.sidebar.collapsed {
+  top: var(--header-collapsed-height);
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  margin-top: calc(var(--header-height) + 0.8em);
+  transition: margin-top 0.3s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+.main-content.collapsed {
+  margin-top: calc(var(--header-collapsed-height) + 0.8em);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.product-card {
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+/* 确保下拉菜单显示在最上层 */
+.dropdown-menu {
+  z-index: 2000 !important;
+}
+
+/* 确保侧边栏的下拉菜单显示在内容之上 */
+.sidebar .subcategories,
+.sidebar .sub-subcategories {
+  z-index: 2100 !important;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+}
